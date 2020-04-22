@@ -1,10 +1,8 @@
 
 const EventEmitter = require('events');
 
-var _ = require('underscore');
 const async = require('async');
 const request = require('request');
-const express = require('express');
 const headerParser = require('parse-link-header');
 
 const USERNAME = 'toolio-retail';
