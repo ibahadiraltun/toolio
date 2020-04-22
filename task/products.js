@@ -2,12 +2,10 @@
 const EventEmitter = require('events');
 
 var _ = require('underscore');
+const async = require('async');
 const request = require('request');
 const express = require('express');
 const headerParser = require('parse-link-header');
-const app = express();
-
-const async = require('async');
 
 const USERNAME = 'toolio-retail';
 const API_KEY = 'c873d395f841c64634c5330ce9118c9d';
