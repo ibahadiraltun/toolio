@@ -16,10 +16,26 @@ const USERNAME = 'toolio-retail';
 const API_KEY = 'c873d395f841c64634c5330ce9118c9d';
 const PASSWORD = '5dcf9317c6ff86ea61d21b0d4dd0a1a8';
 
-const BASE_URL = `https://${API_KEY}:${PASSWORD}@${USERNAME}.myshopify.com/admin/api/2020-04/products.json?limit=250`;
+const BASE_URL = `https://${API_KEY}:${PASSWORD}@${USERNAME}.myshopify.com/admin/api/2020-04/products.json?limit=250&fields=id,title`;
 
-products.on('productsListed', (allProducts) => {
-  console.log(allProducts);
+var allProducts = null;
+
+function sampleTest() {
+  // console.log(allProducts.products);
+  allProducts.products.forEach(cur => {
+    // console.log(cur.id, cur.title);
+    var title = cur.title.toLowerCase();
+    var target = 'awesome';
+    if (title.includes(target)) {
+      console.log(cur.id, cur.title);
+    }
+  });
+}
+
+products.on('productsListed', (products) => {
+  // console.log(products);
+  allProducts = products;
+  sampleTest();
 });
 
 products.getProducts();
