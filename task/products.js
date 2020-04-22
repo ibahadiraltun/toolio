@@ -17,7 +17,6 @@ class Products extends EventEmitter {
         var isNextPage = true;
         var curUrl = BASE_URL;
         var allProducts = null;
-
         var curObj = this;
 
         console.log('------ fetching products starts ------ ');
@@ -28,13 +27,16 @@ class Products extends EventEmitter {
               if (err) {
                 console.log(err);
               }
-      
+              
+
+              // appending next 250 products to previous one.
               if (allProducts == null) {
                 allProducts = body;
               } else {
                 allProducts.products = [...allProducts.products, ...body.products];
               }
 
+              // parsing headers to find next page_info.
               var parsedLink = headerParser(res.headers.link);
               // console.log(parsedLink);
               if (parsedLink.next == null) {
@@ -44,6 +46,8 @@ class Products extends EventEmitter {
               }
           
               var nextPageInfo = parsedLink.next.page_info;
+
+              // updating url
               curUrl = BASE_URL + '&page_info=' + nextPageInfo;
               console.log(curUrl);
             });
@@ -52,14 +56,14 @@ class Products extends EventEmitter {
             setTimeout(callback, 1000);
           },
           function (error) {
-              // 5 seconds have passed, n = 5
               if (error) {
                 console.log(error);
               } else {
                 console.log("All products have been listed");
+                
+                // sending signal to app.js. It will now start server.
                 curObj.emit('productsListed', allProducts);
               }
-      
           }
         );
         
