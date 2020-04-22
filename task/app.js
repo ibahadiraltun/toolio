@@ -11,6 +11,8 @@ const async = require('async');
 const Products = require('./products');
 const products = new Products();
 
+const query = require('./query');
+
 
 const USERNAME = 'toolio-retail';
 const API_KEY = 'c873d395f841c64634c5330ce9118c9d';
@@ -35,7 +37,8 @@ function sampleTest() {
 products.on('productsListed', (products) => {
   // console.log(products);
   allProducts = products;
-  sampleTest();
+  // sampleTest();
+  console.log(query(allProducts, 'Awesome'));
 });
 
 products.getProducts();
